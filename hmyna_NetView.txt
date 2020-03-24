@@ -1,0 +1,71 @@
+library("netview")
+setwd("~/hmyna")
+graculamatrix <- matrix(scan("hmynadistancematrix.mdist"),nrow = 16,byrow = TRUE)
+graculadata <- read.csv("graculadata.csv", header=TRUE)
+#Plotting
+graculaOptions <- netviewOptions(selectionTitle="Gracula k-Selection", nodeID="ID", nodeGroup="Group", nodeColour="Colour", communityAlgorithms=c("Walktrap", "Infomap", "Fast-Greedy"))
+graphs <- netview(graculamatrix, graculadata, k=1:60, cluster = TRUE, options=graculaOptions)
+kPlot <- plotSelection(graphs, options=graculaOptions)
+kPlot
+netview(graculamatrix, graculadata, k=20, tree= NULL, cluster=TRUE, mst=FALSE, networkD3=TRUE, save=FALSE, project="netview", options=netviewOptions())
+#Further options
+k10 <- graphs$k10
+plot(k10, vertex.size=7, vertex.label=as.character(graculadata$ID))
+
+k2 <- graphs$k2
+plot(k2, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K2")
+
+k3 <- graphs$k3
+plot(k3, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K3")
+
+k4 <- graphs$k4
+plot(k4, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K4")
+
+k5 <- graphs$k5
+plot(k5, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K5")
+
+k6 <- graphs$k6
+plot(k6, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K6")
+
+k7 <- graphs$k7
+plot(k7, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K7")
+
+k25 <- graphs$k25
+plot(k25, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K25")
+
+k10 <- graphs$k10
+plot(k10, vertex.size=10, vertex.label=as.character(graculadata$ID), main="K10")
+
+
+k2 <- graphs$k2
+plot(k2, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k2), main="K2")
+
+k3 <- graphs$k3
+plot(k3, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k3), main="K3")
+
+k4 <- graphs$k4
+plot(k4, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k4), main="K4")
+
+k5 <- graphs$k5
+plot(k5, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k5), main="K5")
+
+k6 <- graphs$k6
+plot(k6, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k6), main="K6")
+
+k7 <- graphs$k7
+plot(k7, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k7), main="K7")
+
+k10 <- graphs$k10
+plot(k10, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k10), main="K10")
+
+k25 <- graphs$k25
+plot(k25, vertex.size=7, vertex.label=NA, layout=layout.kamada.kawai(k5), main="K25")
+
+plot(graphs$k40, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k40$walktrap))
+plot(graphs$k25, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k25$walktrap))
+plot(graphs$k10, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k10$walktrap))
+plot(graphs$k7, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k7$walktrap))
+plot(graphs$k6, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k6$walktrap))
+plot(graphs$k5, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k5$walktrap))
+plot(graphs$k4, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k4$walktrap))
+plot(graphs$k3, vertex.size=7, vertex.label=NA, mark.groups=communities(graphs$k3$walktrap))

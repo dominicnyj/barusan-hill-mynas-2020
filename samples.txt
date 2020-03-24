@@ -1,0 +1,19 @@
+Sample Name	Analysis ID
+Bangkaru 1	BGKR01
+Bangkaru 2	BGKR02
+Jurong 1	JURG01
+Jurong 2	JURG02
+Jurong 3	JURG03
+Jurong 4	JURG04
+Jurong 5	JURG05
+Jurong 6	JURG06
+Nias 1	NIAS01
+Nias 2	NIAS02
+Simeulue 1	SMLU01
+Simeulue 2	SMLU02
+Simuk 1	SIMK01
+Simuk 2	SIMK02
+Singapore 1	TIONG
+Singapore 2	HMYNASGCR300
+Sumatra	WSHM01
+Telo	TELO01

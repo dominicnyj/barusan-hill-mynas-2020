@@ -1,0 +1,46 @@
+# Demultiplexing raw sequenced reads 
+process_radtags -1 ./hmyna_R1_001.fastq.gz -2 ./hmyna_R2_001.fastq.gz --renz_1 ecoRI --renz_2 mspI -b ./hymnasg_index.txt -i gzfastq -o ./demultiplex/ -c -q -r
+
+# Aligning to Reference Genome
+Please refer to bwamem_loop.sh
+
+# Samtools view and sort
+Please refer to samtools_loop.sh
+
+# SNP calling with Stacks
+ref_map.pl -b 1 -o ./refmap --samples ./sorted -m 10 -O ./hmyna_popmap.txt -T 5 -S
+populations -b 1 -P ./refmap -M ./hmyna_popmap.txt -t 5 -p 1 -r 0.9 --write_single_snp -k --vcf --plink --structure --genepop --phylip
+
+# Plink
+	#Removing LD
+	./plink --file ./hmyna.plink --allow-extra-chr --allow-no-sex --indep-pairwise 25 10 0.9
+
+	#Extracting SNP data
+	./plink --file ./hmyna.plink --extract plink.prune.in --allow-extra-chr --make-bed --out hmyna_plink
+
+	#Formating output data in structure format
+	./plink --bfile hmyna_plink --allow-extra-chr --recode structure --out hmyna_plink_structure
+
+	#Formating output data in vcf format
+	./plink --bfile hmyna_plink --allow-extra-chr --recode vcf --allow-no-sex --out hmyna_plink_vcf
+
+	#Check missing data
+	./plink --bfile hmyna_plink --allow-extra-chr --missing --allow-no-sex --out hmyna_plink_missingdata
+
+	#Distance matrix for netview
+	./plink --bfile hmyna_plink --allow-extra-chr --allow-no-sex --distance-matrix --out hmyna_plink_genedist-matrix 
+
+#PCA
+Please see R Script "hmyna_PCA.R" for PCA
+
+#Netview
+Please see R script "netview_gracula" for netview
+
+#Structure_threader
+Please refer to hmyna_structurethreader.sh in folder structure
+
+#ipyrad
+ipyrad -p ./ipyrad_params.txt -s1234567 -r -c 8 --MPI
+
+#RaXML
+./raxmlHPC-PTHREADS-AVX -x 836320 -f a -m GTRGAMMA -n hmyna_ipyrad_raxml -o AGSM2204 -s ./hmyna.phy -T 8 -N 1000 -p 823935 
